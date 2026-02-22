@@ -1,8 +1,16 @@
+export type Genre =
+  | "FICTION"
+  | "NON_FICTION"
+  | "SCIENCE"
+  | "HISTORY"
+  | "BIOGRAPHY"
+  | "FANTASY";
+
 export interface IBook {
   _id: string;
   title: string;
   author: string;
-  genre: string;
+  genre: Genre;
   isbn: string;
   description?: string;
   copies: number;
@@ -14,11 +22,10 @@ export interface IBook {
 export interface IAddBook {
   title: string;
   author: string;
-  genre: string;
+  genre: Genre;
   isbn: string;
   description?: string;
   copies: number;
-  available?: boolean;
 }
 
 export interface IUpdateBook extends IAddBook {
@@ -54,8 +61,9 @@ export interface IApiResponse<T> {
   data?: T;
   error?: unknown;
 }
+
 export type GetBooksParams = {
-  filter?: string;
+  filter?: Genre;
   sortBy?: string;
   sort?: "asc" | "desc";
   limit?: number;

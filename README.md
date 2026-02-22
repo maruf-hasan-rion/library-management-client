@@ -83,13 +83,15 @@ npm install
 VITE_API_URL=http://localhost:5000/api
 ```
 
-Make sure your backend server is running and CORS allows your frontend URL. 3. Run the project
+Make sure your backend server is running and CORS allows your frontend URL.
+
+3. Run the project
 
 ```bash
 npm run dev
 ```
 
-    Build for production:
+Build for production:
 
 ```bash
 npm run build
@@ -110,6 +112,10 @@ npm run build
 
 ---
 
-Author
+## Author
 
-Library Hero — Library Management frontend.
+Library Hero — Library Management Client.
+
+---
+
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://library-management-client-gamma-blue.vercel.app)

@@ -36,7 +36,7 @@ export const booksApi = createApi({
 
     getBookById: builder.query<IApiResponse<IBook>, string>({
       query: (id) => `books/${id}`,
-      providesTags: (result, error, id) => [{ type: "Book" as const, id }],
+      providesTags: (_result, _error, id) => [{ type: "Book" as const, id }],
     }),
 
     addBook: builder.mutation<IApiResponse<IBook>, IAddBook>({
@@ -54,7 +54,7 @@ export const booksApi = createApi({
         method: "PUT",
         body: book,
       }),
-      invalidatesTags: (result, error, arg) => [
+      invalidatesTags: (_result, _error, arg) => [
         { type: "Book" as const, id: arg.id },
         { type: "Book" as const, id: "LIST" },
       ],
@@ -65,7 +65,7 @@ export const booksApi = createApi({
         url: `books/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, id) => [
+      invalidatesTags: (_result, _error, id) => [
         { type: "Book" as const, id },
         { type: "Book" as const, id: "LIST" },
       ],

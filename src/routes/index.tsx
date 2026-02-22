@@ -3,7 +3,6 @@ import App from "../App";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import AllBooks from "../pages/AllBooks";
-import BookDetails from "../pages/BookDetails";
 import BorrowSummary from "../pages/BorrowSummary";
 import AddBook from "../pages/AddBook";
 
@@ -19,10 +18,6 @@ const router = createBrowserRouter([
       {
         path: "books",
         Component: AllBooks,
-      },
-      {
-        path: "books/:id",
-        Component: BookDetails,
       },
       {
         path: "add-book",
