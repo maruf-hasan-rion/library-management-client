@@ -1,93 +1,119 @@
 import { BookOpen, Plus } from "lucide-react";
 import { useGetBorrowSummaryQuery } from "../features/borrows/borrowApi";
 import Lottie from "lottie-react";
-import loader from '../assets/loader.json'
+import loader from "../assets/loader.json";
 import Button from "../components/ui/Button";
 import { Link } from "react-router";
 
-
 const BorrowSummary = () => {
-    // Fetch borrow summary data using RTK Query
-    const { data, isLoading, isError } = useGetBorrowSummaryQuery(undefined);
+  const { data, isLoading, isError } = useGetBorrowSummaryQuery(undefined);
+  const summaries = data?.data || [];
 
-    // Extract summaries or set as empty array fallback
-    const summaries = data?.data || []
-
-    // ✅ 1. Handle loading state with Lottie animation
-    if (isLoading) {
-        return (
-            <div className="flex justify-center items-center h-[60vh]">
-                <Lottie className="size-20" animationData={loader} />
-            </div>
-        );
-    }
-
-    // ✅ 2. Handle error state
-    if (isError) {
-        return (
-            <div className="flex flex-col justify-center items-center h-[60vh] text-center">
-                <h2 className="text-xl font-semibold text-red-600">Something went wrong</h2>
-                <p className="text-gray-500 mt-2">
-                    Failed to fetch borrows summary. Please try again.
-                </p>
-                <Button variant="primary" className="mt-4" onClick={() => window.location.reload()}>
-                    Retry
-                </Button>
-            </div>
-        );
-    }
-
-    // ✅ 3. Main UI rendering (Empty state or table)
+  if (isLoading) {
     return (
-        <div>
-            {/* Empty state if no borrow summaries exist */}
-            {summaries?.length === 0 ?
-                <div className="text-center flex justify-center items-center h-[60vh] px-4">
-                    <div>
-                        <BookOpen className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                        <h3 className="text-lg font-medium text-gray-900 mb-2">No borrow summary found</h3>
-                        <p className="text-gray-500 mb-6">Please add your first borrow book to the borrow summary.</p>
-                        <Link to="/books">
-                            <Button icon={Plus} variant="primary">
-                                Take Your First borrow
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
-                : (
-                    // ✅ Borrow summary table view
-                    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                        <h1 className="text-3xl font-bold text-gray-800 mb-2"> Borrow Summary</h1>
-
-                        {/* Summary Table */}
-                        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-                            <div className="overflow-x-auto">
-                                <table className="min-w-full divide-y divide-gray-200 text-sm">
-                                    <thead className="bg-gray-50 text-gray-600 uppercase tracking-wide text-xs">
-                                        <tr>
-                                            <th className="px-6 py-3 text-left">Book Title</th>
-                                            <th className="px-6 py-3 text-left">ISBN</th>
-                                            <th className="px-6 py-3 text-left truncate">Total Quantity Borrowed</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="bg-white divide-y divide-gray-100">
-                                        {summaries.map((summary, i) => (
-                                            <tr key={i} className="hover:bg-gray-50 transition-colors">
-                                                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-800">
-                                                    {summary.book.title}
-                                                </td>
-                                                <td className="px-6 py-4 text-gray-600">{summary.book.isbn}</td>
-                                                <td className="px-6 py-4 text-gray-600 font-medium">{summary.totalQuantity} copies</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                )}
-        </div>
+      <div className="flex h-[60vh] items-center justify-center">
+        <Lottie className="size-20" animationData={loader} />
+      </div>
     );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex h-[60vh] flex-col items-center justify-center text-center">
+        <h2 className="text-xl font-semibold text-red-600">
+          Something went wrong
+        </h2>
+        <p className="mt-2 text-gray-500">
+          Failed to fetch borrow summary. Please try again.
+        </p>
+        <Button
+          variant="primary"
+          className="mt-4"
+          onClick={() => window.location.reload()}
+        >
+          Retry
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-[calc(100vh-140px)] bg-gray-50">
+      <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-gray-900">Borrow Summary</h1>
+          <p className="mt-1 text-sm text-gray-600">
+            Overview of how many copies were borrowed per book.
+          </p>
+
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700">
+            <span className="h-2 w-2 rounded-full bg-blue-600" />
+            {summaries.length} {summaries.length === 1 ? "record" : "records"}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm">
+          {summaries.length === 0 ? (
+            <div className="flex flex-col items-center justify-center px-4 py-14 text-center">
+              <BookOpen className="mb-4 h-12 w-12 text-gray-400" />
+              <h3 className="mb-2 text-lg font-semibold text-gray-900">
+                No borrow records found
+              </h3>
+              <p className="mb-6 text-gray-600">
+                Borrow a book to see summary here.
+              </p>
+              <Link to="/all-books">
+                <Button icon={Plus} variant="primary">
+                  Borrow Your First Book
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center justify-between border-b border-gray-200 p-4">
+                <p className="text-sm font-medium text-gray-700">
+                  Summary Table
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="min-w-full">
+                  <thead className="bg-gray-100">
+                    <tr className="text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                      <th className="px-6 py-4">Book Title</th>
+                      <th className="px-6 py-4">ISBN</th>
+                      <th className="px-6 py-4 text-right">Total Borrowed</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 bg-white">
+                    {summaries.map((summary, i) => (
+                      <tr
+                        key={i}
+                        className="transition-colors hover:bg-blue-50/40"
+                      >
+                        <td className="px-6 py-4 font-semibold text-gray-900">
+                          {summary.book.title}
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-700">
+                          {summary.book.isbn}
+                        </td>
+                        <td className="px-6 py-4 text-right text-sm font-semibold text-gray-900">
+                          {summary.totalQuantity}{" "}
+                          <span className="font-normal text-gray-500">
+                            {summary.totalQuantity === 1 ? "copy" : "copies"}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default BorrowSummary;

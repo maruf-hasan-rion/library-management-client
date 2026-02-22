@@ -1,77 +1,115 @@
-# Library Management Client
+# Library Management Client(Library Hero)
 
 A minimal yet modern library management system built using React, TypeScript, Redux Toolkit Query, and Tailwind CSS.
 
-## It connects to a Node.js + Express + MongoDB backend and focuses on essential book management and borrowing features—without authentication, categories, or payment integration.
-
-## ✨ Features
-
-### 📚 Book Management
-
-- Display all books in a responsive table with columns: Title, Author, Genre, ISBN, Copies, Availability, Actions
-
-- Add new books through a simple form
-
-- Edit existing book details
-
-- Delete books with confirmation dialog
-
-- Borrow books with quantity and due date options
-
-- Business Rules:
-
-- Borrowed quantity cannot exceed available copies
-
-- When copies === 0, the book is automatically marked as unavailable
-
----
-
-### Borrow Summary
-
-- Aggregated view of all borrowed books
-- Shows: Title | ISBN | Total Quantity Borrowed
+It connects to a Node.js + Express + MongoDB backend and focuses on essential book management and borrowing features—without authentication, categories, or payment integration.
 
 ---
 
 ## Tech Stack
 
-| Layer    | Tech                      |
-| -------- | ------------------------- |
-| Frontend | React, TypeScript         |
-| State    | Redux Toolkit + RTK Query |
-| Styling  | Tailwind CSS              |
-| Backend  | Node.js, Express.js       |
-| Database | MongoDB + Mongoose        |
-| Toast UI | React Hot Toast           |
+- **React** + **TypeScript**
+- **Vite** (build tool)
+- **Tailwind CSS** (raw utility styling)
+- **Headless UI** (accessible modal + listbox)
+- **Redux Toolkit + RTK Query** (state + API caching)
+- **React Hook Form** (forms)
+- **React Router** (routing)
+- **react-hot-toast** (notifications)
+- **SweetAlert2** (confirm dialogs)
+- **Lottie** (loading animation)
+- **lucide-react / react-icons** (icons)
 
 ---
 
-## Pages / Routes
+## ✨ Features
 
-- `/books` – Book list view
-- `/add-book` – Add book form
-- `/borrow-summary` – Borrow summary
+- View all books (table view)
+- View details (modal)
+- Add book (form)
+- Edit book (modal form)
+- Borrow book (modal form)
+- Borrow summary (aggregated table)
+- Confirm delete with SweetAlert
+- Borrow books (quantity and due date)
+  - Borrowed quantity cannot exceed available copies
+  - When copies === 0, the book is automatically marked as unavailable
 
 ---
 
-## Setup Instructions
+## Project Structure
 
----
-
+```txt
+src/
+  assets/                # lottie / images
+  components/
+    books/               # BookModals + forms (borrow/edit/view)
+    layout/              # Navbar, Footer
+    ui/                  # Button, reusable UI components
+  features/
+    books/               # RTK Query bookApi
+    borrows/             # RTK Query borrowApi
+    modal/               # modalSlice
+  pages/
+    Home.tsx
+    AllBooks.tsx
+    AddBook.tsx
+    BorrowSummary.tsx
+    NotFound.tsx
+  router/
+    router.ts
+  store/
+    store.ts
+    hook.ts
+  types.ts
 ```
-# Clone the repository
+
+---
+
+## Setup & Installation
+
+1. Clone and install
+
+```bash
 git clone https://github.com/maruf-hasan-rion/library-management-client
 cd library-management-client
-
-# Install dependencies
 npm install
+```
 
-# Create a .env file
- .env
+2. Environment variables
+   Create a `.env` file in the project root:
 
-# Set .env file with environment variables
-VITE_API_URL=
+```bash
+VITE_API_URL=http://localhost:5000/api
+```
 
-# Run the command
+Make sure your backend server is running and CORS allows your frontend URL. 3. Run the project
+
+```bash
 npm run dev
 ```
+
+    Build for production:
+
+```bash
+npm run build
+```
+
+---
+
+## Routes
+
+| Route             | Description       |
+| ----------------- | ----------------- |
+| `/`               | Home              |
+| `/books`          | View all books    |
+| `/books/:id`      | Book details page |
+| `/add-book`       | Add new book      |
+| `/borrow-summary` | Borrow summary    |
+| `*`               | Not found         |
+
+---
+
+Author
+
+Library Hero — Library Management frontend.

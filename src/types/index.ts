@@ -6,46 +6,11 @@ export interface IBook {
   isbn: string;
   description?: string;
   copies: number;
-  available?: boolean;
+  available: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
 
-export interface IBorrow {
-  _id?: string;
-  book: string | BookRef;
-  quantity: number;
-  dueDate: string;
-}
-export interface IBorrowData {
-  book: string;
-  quantity: number;
-  dueDate: string;
-}
-export interface BookRef {
-  _id: string;
-  title: string;
-  isbn: string;
-}
-
-export interface IBorrowSummary {
-  book: {
-    bookId: string;
-    title: string;
-    isbn: string;
-  };
-  totalQuantity: number;
-}
-
-export interface IApiResponse<T> {
-  data?: T;
-  error?: object;
-  message?: string;
-  success: boolean;
-}
-export interface IUpdateBook extends IAddBook {
-  id: string;
-}
 export interface IAddBook {
   title: string;
   author: string;
@@ -55,3 +20,43 @@ export interface IAddBook {
   copies: number;
   available?: boolean;
 }
+
+export interface IUpdateBook extends IAddBook {
+  id: string;
+}
+
+export interface IBorrowData {
+  book: string;
+  quantity: number;
+  dueDate: string;
+}
+
+export interface IBorrow {
+  _id: string;
+  book: string;
+  quantity: number;
+  dueDate: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface IBorrowSummary {
+  book: {
+    title: string;
+    isbn: string;
+  };
+  totalQuantity: number;
+}
+
+export interface IApiResponse<T> {
+  success: boolean;
+  message?: string;
+  data?: T;
+  error?: unknown;
+}
+export type GetBooksParams = {
+  filter?: string;
+  sortBy?: string;
+  sort?: "asc" | "desc";
+  limit?: number;
+};

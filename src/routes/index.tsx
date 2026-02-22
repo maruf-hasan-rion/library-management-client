@@ -17,15 +17,11 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/",
-        Component: Home,
-      },
-      {
-        path: "all-books",
+        path: "books",
         Component: AllBooks,
       },
       {
-        path: "all-books/:id",
+        path: "books/:id",
         Component: BookDetails,
       },
       {

@@ -5,34 +5,13 @@ import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 pt-2">
         <Outlet />
       </main>
       <Footer />
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 2000,
-          style: {
-            background: "#363636",
-            color: "#fff",
-          },
-          success: {
-            duration: 2000,
-            style: {
-              background: "#10B981",
-            },
-          },
-          error: {
-            duration: 2000,
-            style: {
-              background: "#EF4444",
-            },
-          },
-        }}
-      />
+      <Toaster position="top-right" />
     </div>
   );
 };
